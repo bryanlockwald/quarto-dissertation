@@ -5,3 +5,5 @@ This Quarto template renders a PDF of a dissertation/thesis with formatting for 
 The extension primarily uses Quarto and a series of LaTeX partials in the tex folder. Additionally, the template was created for a 3-paper dissertation/thesis, although it can be easily modified to accommodate other formats.
 
 The extension primarily uses Quarto and a series of LaTeX partials in the tex folder. Additionally, the template was created for a 3-paper dissertation/thesis, although it can be easily modified to accommodate a traditional dissertation—swap the .qmd files with your dissertation chapters.
+
+I created the bibliography using the American Political Science Association CSL file, which can be found in the 'style' folder. Other CSL files, such as APA, MLA, and Chicago Manual of Style, can be found in the [Official repository for Citation Style Language (CSL) citation styles](https://github.com/citation-style-language).
