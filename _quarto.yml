@@ -1,0 +1,63 @@
+project:
+  type: book
+  execute-dir: project
+
+execute: 
+  echo: false
+  warning: false
+  message: false
+
+book:
+  title: "Working Title: Geography of Democratic Backsliding In Eastern Europe" 
+  author: "Bryan J. Lockwald"
+  output-file: "lockwald_diss_working"
+  chapters:
+    - index.qmd
+    - chapters/02-study1.qmd
+    - chapters/03-study2.qmd
+    - chapters/04-study3.qmd
+    - chapters/05-conclusion.qmd
+    - chapters/references.qmd
+
+bibliography: references.bib
+csl: styles/american-political-science-association.csl
+
+format:
+  pdf:
+    documentclass: book
+    classoption: ["oneside", "open=any"]
+    margin-left: "1in"
+    margin-right: "1in"
+    margin-top: "1in"
+    margin-bottom: "1in" 
+    linestretch: 2
+    template-partials: 
+      - "tex/_titlepage.tex" 
+      - "tex/before-body.tex" 
+      - "tex/toc.tex" 
+    include-in-header: 
+      - text: | 
+          \usepackage{indentfirst}
+          \setlength{\parindent}{1cm}
+          \usepackage{fvextra}
+          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+          \usepackage{setspace}
+          \doublespacing
+          \pagenumbering{gobble} 
+          \usepackage{sectsty}
+          \usepackage{titlesec}
+          \titleformat{\chapter}[display]
+          {\normalfont\bfseries\centering}{}{0pt}{\fontsize{12}{15}\selectfont}
+          \titlespacing*{\chapter}{0pt}{0ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+          \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+          \titlespacing*{\subsection}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+          \sectionfont{\fontsize{12}{15}\selectfont\centering}
+          \subsectionfont{\fontsize{12}{15}\selectfont\centering}
+          \usepackage{titletoc}
+          \contentsmargin{0cm}
+
+    toc: true
+    toc-depth: 3
+    lot: true
+    lof: true
+    number-sections: true
