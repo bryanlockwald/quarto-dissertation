@@ -1,0 +1,12 @@
+# Study 1 Title
+
+## Introduction
+
+```{r}
+library(lorem)
+
+ipsum(paragraphs = 10)
+```
+
+
+![Example Figure](figures/ps_dist.png)
