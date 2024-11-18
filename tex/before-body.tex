@@ -1,0 +1,29 @@
+$if(has-frontmatter)$
+  \begin{frontmatter}
+  \begin{titlepage}
+  $_titlepage.tex()$
+  \end{titlepage}
+  \end{frontmatter}
+$else$
+  \begin{titlepage}
+  $_titlepage.tex()$
+  \end{titlepage}
+$endif$
+
+% Abstract page
+\input{tex/abstract.tex}
+
+% Dedication page
+\input{tex/dedication.tex}
+
+% Order of TOC, LOT, and LOF
+$if(toc)$
+\tableofcontents
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
