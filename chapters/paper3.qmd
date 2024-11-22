@@ -1,0 +1,120 @@
+# Paper 3
+
+## Abstract
+
+\[Brief summary of the research, findings, and implications\]
+
+## Introduction
+
+### Background
+
+\[Background of the research problem and context\]
+
+```{r setup, include=FALSE}
+library(palmerpenguins)
+library(tidyverse)
+library(knitr)
+library(patchwork)
+```
+
+```{r intro-plot, fig.cap="Penguin Measurements Across Islands", echo=FALSE}
+#| label: fig-intro-plot
+p1 <- ggplot(penguins, aes(x = island, y = bill_length_mm, fill = species)) +
+  geom_boxplot() +
+  labs(title = "Bill Length by Island", x = "", y = "Bill Length (mm)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+p2 <- ggplot(penguins, aes(x = island, y = flipper_length_mm, fill = species)) +
+  geom_boxplot() +
+  labs(title = "Flipper Length by Island", x = "", y = "Flipper Length (mm)") +
+  theme_minimal()
+
+p1 / p2
+```
+
+### Literature Review
+
+\[Review of relevant literature and theoretical framework\]
+
+@sitter2019
+
+### Research Questions
+
+1.  Primary research question
+2.  Secondary research questions
+
+## Methods
+
+### Data
+
+\[Description of data sources and collection methods\]
+
+```{r island-summary, echo=FALSE}
+#| label: tbl-island-summary
+#| tbl-cap: "Population Distribution by Island and Species"
+penguins %>%
+  group_by(island, species) %>%
+  summarise(
+    total_count = n(),
+    female_count = sum(sex == "female", na.rm = TRUE),
+    male_count = sum(sex == "male", na.rm = TRUE),
+    avg_body_mass = mean(body_mass_g, na.rm = TRUE)
+  ) %>%
+  kable(caption = "Population Distribution by Island and Species",
+        col.names = c("Island", "Species", "Total Count", 
+                     "Females", "Males", "Avg Mass (g)"),
+        digits = 0)
+```
+
+### Analysis
+
+\[Description of analytical approach and methods\]
+
+```{r analysis-plots, fig.cap="Multi-dimensional Analysis of Penguin Characteristics", echo=FALSE, warning=FALSE}
+#| label: fig-analysis-plots
+p3 <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, size = body_mass_g)) +
+  facet_wrap(~island) +
+  labs(x = "Bill Length (mm)", y = "Bill Depth (mm)") +
+  theme_minimal()
+
+p4 <- ggplot(penguins, aes(x = species, fill = sex)) +
+  geom_bar(position = "dodge") +
+  facet_wrap(~island) +
+  labs(x = "", y = "Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p3 / p4
+```
+
+## Results
+
+### Primary Findings
+
+\[Main results with supporting evidence\]
+
+### Secondary Findings
+
+\[Additional findings and analyses\]
+
+## Discussion
+
+### Theoretical Implications
+
+\[How findings contribute to theory\]
+
+### Practical Implications
+
+\[Real-world applications and implications\]
+
+### Limitations
+
+\[Study limitations and constraints\]
+
+## Conclusion
+
+\[Summary of key findings and future research directions\]
+
+## References

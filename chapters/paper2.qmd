@@ -1,0 +1,123 @@
+
+# Paper 2
+
+## Abstract
+
+\[Brief summary of the research, findings, and implications\]
+
+## Introduction
+
+### Background
+
+\[Background of the research problem and context\]
+
+```{r setup, include=FALSE}
+library(palmerpenguins)
+library(tidyverse)
+library(knitr)
+library(corrplot)
+```
+
+```{r}
+#| label: fig-intro
+#| fig-cap: "Penguin Body Mass Distribution by Species"
+#| echo: false
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_violin() +
+  geom_boxplot(width = 0.2, alpha = 0.5) +
+  labs(x = "Species", y = "Body Mass (g)", 
+       title = "Body Mass Distribution by Penguin Species") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### Literature Review
+
+\[Review of relevant literature and theoretical framework\]
+
+@cheibub2010
+
+### Research Questions
+
+1.  Primary research question
+2.  Secondary research questions
+
+## Methods
+
+### Data
+
+\[Description of data sources and collection methods\]
+
+```{r}
+#| label: fig-correlation
+#| fig-cap: "Correlation Matrix of Penguin Measurements"
+#| echo: false
+penguins %>%
+  select(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) %>%
+  cor(use = "complete.obs") %>%
+  corrplot(method = "color", type = "upper", 
+           tl.col = "black", tl.srt = 45)
+```
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summary Statistics by Species and Sex"
+#| echo: false
+penguins %>%
+  group_by(species, sex) %>%
+  summarise(
+    count = n(),
+    mean_mass = mean(body_mass_g, na.rm = TRUE),
+    sd_mass = sd(body_mass_g, na.rm = TRUE)
+  ) %>%
+  kable(caption = "Summary Statistics by Species and Sex",
+        col.names = c("Species", "Sex", "Count", 
+                     "Mean Mass (g)", "SD Mass (g)"),
+        digits = 2)
+```
+
+### Analysis
+
+\[Description of analytical approach and methods\]
+
+```{r}
+#| label: fig-results
+#| fig-cap: "Flipper Length vs Body Mass by Species"
+#| echo: false
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE) +
+  facet_wrap(~sex) +
+  labs(x = "Flipper Length (mm)", y = "Body Mass (g)") +
+  theme_minimal()
+```
+
+## Results
+
+### Primary Findings
+
+\[Main results with supporting evidence\]
+
+### Secondary Findings
+
+\[Additional findings and analyses\]
+
+## Discussion
+
+### Theoretical Implications
+
+\[How findings contribute to theory\]
+
+### Practical Implications
+
+\[Real-world applications and implications\]
+
+### Limitations
+
+\[Study limitations and constraints\]
+
+## Conclusion
+
+\[Summary of key findings and future research directions\]
+
+## References
