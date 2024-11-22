@@ -8,18 +8,19 @@ execute:
   message: false
 
 book:
-  title: "Working Title: Geography of Democratic Backsliding In Eastern Europe" 
-  author: "Bryan J. Lockwald"
-  output-file: "lockwald_diss_working"
+  title: "Dissertation Title" 
+  author: "Joan Q. Public"
+  output-file: "author_diss"
   chapters:
     - index.qmd
-    - chapters/02-study1.qmd
-    - chapters/03-study2.qmd
-    - chapters/04-study3.qmd
-    - chapters/05-conclusion.qmd
+    - chapters/paper1.qmd
+    - chapters/paper2.qmd
+    - chapters/paper3.qmd
+    - chapters/conclusion.qmd
     - chapters/references.qmd
+    - chapters/cv.qmd
 
-bibliography: references.bib
+bibliography: chapters/references.bib
 csl: styles/american-political-science-association.csl
 
 format:
@@ -31,33 +32,82 @@ format:
     margin-top: "1in"
     margin-bottom: "1in" 
     linestretch: 2
+    has-frontmatter: true
+    lot: false  # Let before-body.tex handle these
+    lof: false  # Let before-body.tex handle these
+    toc: false  # Let before-body.tex handle these
+    toc-depth: 0
     template-partials: 
-      - "tex/_titlepage.tex" 
       - "tex/before-body.tex" 
-      - "tex/toc.tex" 
+      - "tex/_titlepage.tex" 
     include-in-header: 
-      - text: | 
+      - text: |
           \usepackage{indentfirst}
           \setlength{\parindent}{1cm}
           \usepackage{fvextra}
           \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
           \usepackage{setspace}
           \doublespacing
-          \pagenumbering{gobble} 
           \usepackage{sectsty}
           \usepackage{titlesec}
+          \usepackage{float}
+          \floatplacement{figure}{H}
+          \floatplacement{table}{H}
+          \usepackage{tocloft}
+          
+          % Global formatting for all headings
           \titleformat{\chapter}[display]
-          {\normalfont\bfseries\centering}{}{0pt}{\fontsize{12}{15}\selectfont}
-          \titlespacing*{\chapter}{0pt}{0ex plus 1ex minus .2ex}{4.3ex plus .2ex}
-          \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
-          \titlespacing*{\subsection}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
-          \sectionfont{\fontsize{12}{15}\selectfont\centering}
-          \subsectionfont{\fontsize{12}{15}\selectfont\centering}
-          \usepackage{titletoc}
-          \contentsmargin{0cm}
-
-    toc: true
-    toc-depth: 3
-    lot: true
-    lof: true
-    number-sections: true
+            {\normalfont\large\bfseries\centering}
+            {}
+            {0pt}
+            {\large}
+          \titlespacing*{\chapter}{0pt}{-50pt}{40pt}
+          
+          \titleformat{\section}
+            {\normalfont\large\bfseries}
+            {}
+            {0em}
+            {}
+          \titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+          
+          \titleformat{\subsection}
+            {\normalfont\normalsize\bfseries}
+            {}
+            {0em}
+            {}
+          \titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+          
+          % Consistent formatting for TOC/LOF/LOT
+          \renewcommand{\cftchapfont}{\normalfont\bfseries}
+          \renewcommand{\cftchappagefont}{\normalfont}
+          \renewcommand{\cftsecfont}{\normalfont}
+          \renewcommand{\cftsecpagefont}{\normalfont}
+          \renewcommand{\cftsubsecfont}{\normalfont}
+          \renewcommand{\cftsubsecpagefont}{\normalfont}
+          
+          % Remove all numbering
+          \renewcommand{\thechapter}{}
+          \renewcommand{\thesection}{}
+          \renewcommand{\thesubsection}{}
+          \renewcommand{\thefigure}{}
+          \renewcommand{\thetable}{}
+          
+          % Consistent spacing
+          \setlength{\cftbeforechapskip}{1em}
+          \setlength{\cftbeforesecskip}{0.5em}
+          \setlength{\cftbeforesubsecskip}{0.5em}
+          \setlength{\cftbeforefigskip}{0.5em}
+          \setlength{\cftbeforetabskip}{0.5em}
+          
+          % Consistent indentation
+          \setlength{\cftchapindent}{0em}
+          \setlength{\cftsecindent}{0em}
+          \setlength{\cftsubsecindent}{0em}
+          \setlength{\cftfigindent}{0em}
+          \setlength{\cfttabindent}{0em}
+          
+          % Configure dotted leaders
+          \renewcommand{\cftdotsep}{2}
+          \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+          \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+          \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
