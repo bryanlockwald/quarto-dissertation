@@ -1,29 +1,161 @@
 $if(has-frontmatter)$
-  \begin{frontmatter}
-  \begin{titlepage}
-  $_titlepage.tex()$
-  \end{titlepage}
-  \end{frontmatter}
-$else$
-  \begin{titlepage}
-  $_titlepage.tex()$
-  \end{titlepage}
-$endif$
+\begin{frontmatter}
+
+% Set page numbering for front matter
+\pagenumbering{roman}
+\setcounter{tocdepth}{0} % Restrict TOC to chapter-level headings only
+
+% Title page
+\begin{titlepage}
+$_titlepage.tex()$
+\end{titlepage}
+
+% Copyright page
+\input{tex/copyright.tex}
 
 % Abstract page
 \input{tex/abstract.tex}
 
+% Acknowledgments page
+\input{tex/acknowledgements.tex}
+
 % Dedication page
 \input{tex/dedication.tex}
 
-% Order of TOC, LOT, and LOF
-$if(toc)$
-\tableofcontents
-$endif$
-$if(lot)$
-\listoftables
-$endif$
-$if(lof)$
-\listoffigures
-$endif$
+% Format chapter titles and front matter
+\titleformat{\chapter}[display]
+{\normalfont\large\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\large}
+\titlespacing*{\chapter}{0pt}{-50pt}{40pt}
 
+% Define consistent front matter title formatting
+\newcommand{\frontmattertitle}[1]{%
+    \begin{center}%
+        \normalfont\large\bfseries{#1}%
+        \vspace{2em}%
+    \end{center}%
+}
+
+% Apply consistent formatting to all front matter sections
+\renewcommand{\contentsname}{\frontmattertitle{Table of Contents}}
+\renewcommand{\listfigurename}{\frontmattertitle{List of Figures}}
+\renewcommand{\listtablename}{\frontmattertitle{List of Tables}}
+
+% Format front matter entries consistently
+\makeatletter
+% Format TOC entries
+\renewcommand{\l@chapter}[2]{%
+  \vskip 1em
+  \begingroup
+  \leftskip 0em\relax
+  \rightskip \@tocrmarg
+  \parfillskip -\rightskip
+  \parindent 0em\relax
+  \leavevmode
+  \normalfont\bfseries #1\nobreak\leaders\hbox{\ensuremath{\cdot}}\hfill\nobreak
+  \hb@xt@\@pnumwidth{\hss #2}\par
+  \endgroup
+}
+
+% Format LOF entries
+\renewcommand{\l@figure}[2]{%
+  \vskip 0.5em
+  \begingroup
+  \leftskip 0em\relax
+  \rightskip \@tocrmarg
+  \parfillskip -\rightskip
+  \parindent 0em\relax
+  \leavevmode
+  \normalfont #1\nobreak\leaders\hbox{\ensuremath{\cdot}}\hfill\nobreak
+  \hb@xt@\@pnumwidth{\hss #2}\par
+  \endgroup
+}
+
+% Make table entries match figure entries
+\let\l@table\l@figure
+
+% Remove bold from TOC entries
+\makeatletter
+\renewcommand{\l@chapter}[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      \normalfont #1\nobreak\leaders\hbox{\ensuremath{\cdot}}\hfill\nobreak
+      \hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+
+% Remove chapter numbers from figure/table numbers and format LOF/LOT entries
+\makeatletter
+% Remove all numbering from figures and tables
+\renewcommand{\thefigure}{}
+\renewcommand{\thetable}{}
+\renewcommand{\fnum@figure}{}
+\renewcommand{\fnum@table}{}
+
+% Remove chapter and section numbers completely
+\renewcommand{\thechapter}{}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{}
+
+% Format LOF entries
+\renewcommand{\l@figure}[2]{%
+  \vskip 0.5em
+  \begingroup
+  \leftskip 0em\relax
+  \rightskip \@tocrmarg
+  \parfillskip -\rightskip
+  \parindent 0em\relax
+  \leavevmode
+  \normalfont #1\nobreak\leaders\hbox{\ensuremath{\cdot}}\hfill\nobreak
+  \hb@xt@\@pnumwidth{\hss #2}\par
+  \endgroup
+}
+
+% Make table entries match figure entries
+\let\l@table\l@figure
+
+% Remove all indentation and prefixes in LOF/LOT
+\renewcommand{\cftsecindent}{0em}
+\renewcommand{\cftsubsecindent}{0em}
+\renewcommand{\cftfigpresnum}{}
+\renewcommand{\cfttabpresnum}{}
+\renewcommand{\cftfigaftersnum}{}
+\renewcommand{\cfttabaftersnum}{}
+
+% Remove any remaining section numbering artifacts
+\renewcommand{\numberline}[1]{}
+
+\makeatother
+
+% Table of Contents (single instance)
+\cleardoublepage
+{
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+\setcounter{tocdepth}{0}
+\tableofcontents
+}
+
+% List of Tables (single instance)
+\cleardoublepage
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+% List of Figures (single instance)
+\cleardoublepage
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\end{frontmatter}
+
+% Start main document with Arabic numbering
+\mainmatter
+\pagenumbering{arabic}
+$endif$
